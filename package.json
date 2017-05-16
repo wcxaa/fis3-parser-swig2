@@ -1,0 +1,24 @@
+{
+  "name": "fis3-parser-swig2",
+  "version": "0.1.0",
+  "description": "a plugin for fis3, use swig to parse page",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wcxaa/fis3-parser-swig2.git"
+  },
+  "keywords": [
+    "fis",
+    "parser",
+    "swig"
+  ],
+  "author": "WangChengXi",
+  "license": "MIT",
+  "homepage": "https://github.com/wcxaa/fis3-parser-swig2#readme",
+  "dependencies": {
+    "swig-templates": "^2.0.2"
+  }
+}

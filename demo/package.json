@@ -1,0 +1,21 @@
+{
+  "name": "fis3-parser-swig2-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "fis3 release -c -d ./output"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wcxaa/fis3-parser-swig2.git"
+  },
+  "keywords": [
+    "fis",
+    "swig"
+  ],
+  "author": "WangChengXi",
+  "license": "MIT"
+}
