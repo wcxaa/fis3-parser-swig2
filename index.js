@@ -6,8 +6,32 @@
 
 var swig = require('swig-templates');
 
+var fisLoader = {
+	resolve: function(to, from) {
+
+		if (fis.util.exists(to)) {
+			return to;
+		}
+
+		var file = fis.uri(to, from).file;
+		if (!file) {
+			throw Error("find no file: " + to);
+		}
+		return file.realpath;
+
+	},
+	load: function(identifier) {
+		var file = fis.file(identifier);
+		file.useCache = false;
+		file.parser = false;
+		fis.compile(file);
+		return file.getContent();
+	}
+};
+
 var confForce = {
-	cache: false
+	cache: false,
+	loader: fisLoader
 };
 var conf;
 
@@ -17,8 +41,8 @@ module.exports = function(content, file, options) {
 		swig.setDefaults(conf);
 	}
 
-	return swig.compile(content, {
+	return swig.render(content, {
 		filename: file.realpath
-	})(options.globalStatics || {});
+	});
 
 }

@@ -4,27 +4,38 @@
 [![NPM version][npm-image]][npm-url]
 [![Downloads][downloads-image]][npm-url]
 
-a plugin for fis3, use swig to parse page
+a plugin for fis3, use [swig](http://node-swig.github.io/swig-templates/docs/) to enhance html.
 
-Fis3-parser-swig2 can write header,footer and so on into templates.More powerful, it can set global variable to parse pages, which can be used like a sitemap while building period.
-Demos can be seen below.
+Fis3-parser-swig2 can help us to use swig with fis3. We can use some awesome features in swig, like [extends](http://node-swig.github.io/swig-templates/docs/tags/#extends), [SwigOpts.locals](http://node-swig.github.io/swig-templates/docs/api/#SwigOpts) and so on. Fis3-parser-swig2 mainly solves the problem of resource location using swig with fis3.
+
+You can see some examples below.
 
 ## Installation
 
 ```
-npm install --save-dev fis3-spriter-fontmin
+npm install --save-dev fis3-parser-swig2
 ```
 
 ## Use
 
-	parser: fis.plugin('swig2'[,options]); // options type(object)
+```js
+parser: fis.plugin('swig2'[,options]);
+```
 
-options can set anything in [swig](http://node-swig.github.io/swig-templates/docs/api/#SwigOpts), except cache, which is forced to be false.
-One more, options.globalStatics is an Object containing global constants, used to parse pages by swig.
+options type(Object)
+Properties:
 
-## Demo
+| Name        | Type    | Description  |
+| ----------- | ------- | ----- |
+| autoescape  | boolean | Controls whether or not variable output will automatically be escaped for safe HTML output. Defaults to true. Functions executed in variable statements will not be auto-escaped. Your application/functions should take care of their own auto-escaping. |
+| varControls | array   | Open and close controls for variables. Defaults to ['{{', '}}']. |
+| tagControls | array   | Open and close controls for tags. Defaults to ['{%', '%}'].      |
+| cmtControls | array   | Open and close controls for comments. Defaults to ['{#', '#}'].  |
+| locals      | object  | Default variable context to be passed to all templates.          |
 
-### layout.tpl
+## Examples
+
+### /widgets/layout/layout.tpl
 ```html
 <!doctype html>
 <html>
@@ -33,7 +44,7 @@ One more, options.globalStatics is an Object containing global constants, used t
   <title>{% block title %}My Site{% endblock %}</title>
 
   {% block head %}
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="./main.css">
   {% endblock %}
 </head>
 <body>
@@ -43,15 +54,15 @@ One more, options.globalStatics is an Object containing global constants, used t
 </html>
 ```
 
-### index.tpl
+### widgets/index/index.tpl
 ```html
-{% extends 'layout.tpl' %}
+{% extends '/widgets/layout/layout.tpl' %}
 
 {% block title %}My Page{% endblock %}
 
 {% block head %}
   {% parent %}
-  <link rel="stylesheet" href="custom.css">
+  <link rel="stylesheet" href="./custom.css">
 {% endblock %}
 
 {% block content %}
@@ -64,10 +75,10 @@ One more, options.globalStatics is an Object containing global constants, used t
 fis.set('project.ignore', fis.get('project.ignore').concat(['package.json', 'conf/**']));
 
 fis.match('*.tpl', {
-    rExt: '.html',
-    parser: fis.plugin('swig2', {
-        globalStatics: require('./conf')
-    })
+	rExt: '.html',
+	parser: fis.plugin('swig2', {
+		locals: require('./conf')
+	})
 });
 ```
 
@@ -80,7 +91,7 @@ module.exports = {
 
 ---
 
-### result: index.html
+### result: widgets/index/index.html
 ```html
 <!doctype html>
 <html>
@@ -89,10 +100,9 @@ module.exports = {
   <title>My Page</title>
 
 
+  <link rel="stylesheet" href="/widgets/layout/main.css">
 
-  <link rel="stylesheet" href="main.css">
-
-  <link rel="stylesheet" href="custom.css">
+  <link rel="stylesheet" href="/widgets/index/custom.css">
 
 </head>
 <body>

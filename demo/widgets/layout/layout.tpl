@@ -5,7 +5,7 @@
   <title>{% block title %}My Site{% endblock %}</title>
 
   {% block head %}
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="./main.css">
   {% endblock %}
 </head>
 <body>

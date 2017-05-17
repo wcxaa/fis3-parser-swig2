@@ -1,6 +1,6 @@
 {
   "name": "fis3-parser-swig2",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "a plugin for fis3, use swig to parse page",
   "main": "index.js",
   "scripts": {
