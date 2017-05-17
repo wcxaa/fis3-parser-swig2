@@ -5,6 +5,7 @@
 'use strict';
 
 var swig = require('swig-templates');
+var path = require('path');
 
 var fisLoader = {
 	resolve: function(to, from) {
@@ -13,7 +14,7 @@ var fisLoader = {
 			return to;
 		}
 
-		var file = fis.uri(to, from).file;
+		var file = fis.uri(to, path.dirname(from)).file;
 		if (!file) {
 			throw Error("find no file: " + to);
 		}
