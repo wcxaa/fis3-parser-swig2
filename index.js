@@ -41,7 +41,7 @@ module.exports = function(content, file, options) {
 		conf = Object.assign({}, options || {}, confForce);
 		swig.setDefaults(conf);
 	}
-
+	file.useCache = false;
 	return swig.render(content, {
 		filename: file.realpath
 	});
